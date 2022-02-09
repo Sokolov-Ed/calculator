@@ -10,7 +10,7 @@ calculatorField.addEventListener('click', event => {
 				screen.value = secondScreen.value = str = a = b = operations = '';
 				break;
 			case "x":
-				if(screen.value === "Нельзя делить на ноль") {
+				if(screen.value === "Error") {
 					break;
 				}
 				str = screen.value;
@@ -20,17 +20,17 @@ calculatorField.addEventListener('click', event => {
 			case "*":
 			case "-":
 			case "+":
-				if(screen.value === "Нельзя делить на ноль") {
+				if(screen.value === "Error") {
 					break;
 				}
 				screen.value = setOperation(screen.value, event.target.id);
 				break;
 			case "=":
-				if(screen.value === "Нельзя делить на ноль" || a === "") {
+				if(screen.value === "Error" || a === "") {
 					break;
 				}
 				b = setResult(screen.value);
-				if(String(b).length >= 10) {
+				if(String(b).length >= 10 && b !== "Error") {
 					b = b.toExponential(9);
 				}
 				screen.value = b;
@@ -49,14 +49,14 @@ calculatorField.addEventListener('click', event => {
 function setOperation(firstVariable, operation) {
 	if(operations === ""){
 		a = +firstVariable;
-		if(String(a).length >= 10) {
+		if(String(a).length >= 10 && a !== "Error") {
 			a = a.toExponential(9);
 		}
 		secondScreen.value = a;
 	}
 	else if (screen.value.length > 1) {
 		a = setResult(screen.value);
-		if(String(a).length >= 10) {
+		if(String(a).length >= 10 && a !== "Error") {
 			a = a.toExponential(9);
 		}
 		secondScreen.value = a;
@@ -69,8 +69,8 @@ function setResult(secondVariable) {
 	secondScreen.value = '';
 	str = secondVariable;
 	b = +str.slice(1);
-	return a === "Нельзя делить на ноль" && operations === "/" && b === 0 ? a : 
-		a === "Нельзя делить на ноль" ? b : 
-		operations === "/" && b === 0 ? "Нельзя делить на ноль" : 
+	return a === "Error" && operations === "/" && b === 0 ? a : 
+		a === "Error" ? b : 
+		operations === "/" && b === 0 ? "Error" : 
 		eval(`${a} ${operations} ${b}`);
 }
