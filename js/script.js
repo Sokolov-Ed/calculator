@@ -38,7 +38,7 @@ calculatorField.addEventListener('click', event => {
 				break;
 			default:
 				if(screen.value.length < 10) {
-					screen.value === "Нельзя делить на ноль" ? screen.value = event.target.id : 
+					screen.value === "Error" ? screen.value = event.target.id : 
 						screen.value += event.target.id;
 				}
 				break;
